@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 
-
 if (process.env.CI !== 'true') {
   dotenv.config({ path: 'env/prod.env' })
   console.log('Running in local environment')
