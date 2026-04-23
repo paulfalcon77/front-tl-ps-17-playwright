@@ -1,17 +1,47 @@
-import { test, expect } from '@playwright/test'
+import { test } from '@playwright/test'
 import { LoginPage } from '../pages/login-page'
-import { faker } from '@faker-js/faker/locale/ar'
 import { PASSWORD, USERNAME } from '../../config/env-data'
-import { OrderPage } from '../pages/order-page'
+import { faker } from '@faker-js/faker'
 
 test('Login test + order page components check', async ({ page }) => {
   const loginPage = new LoginPage(page)
-  const orderPage = new OrderPage(page)
-
   await loginPage.open()
-
-  await loginPage.usernameField.fill(USERNAME)
-  await loginPage.passwordField.fill(PASSWORD)
-  await loginPage.signInButton.click()
-  await expect(orderPage.statusButton).toBeVisible()
+  const orderPage = await loginPage.signIn(USERNAME, PASSWORD)
+  await orderPage.checkInnerComponents()
 })
+test('Create order test', async ({ page }) => {
+  const loginPage = new LoginPage(page)
+  await loginPage.open()
+  const orderPage = await loginPage.signIn(USERNAME, PASSWORD)
+  await orderPage.createOrder()
+})
+
+test('Validation test on order creation', async ({ page }) => {
+  const loginPage = new LoginPage(page)
+  await loginPage.open()
+  const orderPage = await loginPage.signIn(USERNAME, PASSWORD)
+
+  await orderPage.nameInput.fill('1')
+  await orderPage.phoneInput.fill(faker.phone.number())
+  await orderPage.checkCreateOrderBtnEnabled(false)
+
+  await orderPage.nameInput.fill(faker.person.firstName())
+  await orderPage.phoneInput.fill('2')
+  await orderPage.checkCreateOrderBtnEnabled(false)
+
+  await orderPage.nameInput.fill(faker.person.firstName())
+  await orderPage.phoneInput.fill(faker.phone.number())
+  await orderPage.checkCreateOrderBtnEnabled(true)
+})
+
+test('Logout test', async ({ page }) => {
+  const loginPage = new LoginPage(page)
+  await loginPage.open()
+  const orderPage = await loginPage.signIn(USERNAME, PASSWORD)
+  await orderPage.logoutButton.click()
+  await loginPage.checkInnerComponents()
+  await orderPage.checkLanguageTest()
+  //await loginPage.checkErrorForAuthentication() - выдает ошибку
+})
+//npx playwright test -g "Login test"
+//npx playwright test -g "Create order"
