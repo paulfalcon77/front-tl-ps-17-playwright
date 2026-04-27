@@ -11,14 +11,12 @@ export class LoginPage extends BasePage {
   readonly passwordField: Locator
   readonly logoMain: Locator
 
-
   constructor(page: Page) {
     super(page)
     this.signInButton = new Button(page.getByTestId('signIn-button'))
     this.usernameField = page.getByTestId('username-input')
     this.passwordField = page.getByTestId('password-input')
     this.logoMain = page.getByTestId('mainPage-link')
-
   }
 
   async open() {
@@ -36,8 +34,5 @@ export class LoginPage extends BasePage {
     await expect(this.passwordField).toBeVisible()
     await this.signInButton.checkVisible(true)
     await expect(this.logoMain).toBeVisible()
-
   }
-
-
 }

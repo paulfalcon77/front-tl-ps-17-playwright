@@ -20,8 +20,6 @@ export class OrderPage extends BasePage {
   readonly searchInput: Locator
   readonly searchButton: Button
 
-
-
   constructor(page: Page) {
     super(page)
     this.title = page.locator('h2')
@@ -37,8 +35,6 @@ export class OrderPage extends BasePage {
     this.searchPopup = page.getByTestId('searchOrder-popup')
     this.searchInput = this.searchPopup.getByTestId('searchOrder-input')
     this.searchButton = new Button(this.searchPopup.getByTestId('searchOrder-submitButton'))
-
-
   }
 
   async checkInnerComponents(): Promise<void> {
@@ -48,7 +44,6 @@ export class OrderPage extends BasePage {
     await expect(this.nameInput).toBeVisible()
     await expect(this.phoneInput).toBeVisible()
     await expect(this.commentInput).toBeVisible()
-
   }
 
   async createOrder(): Promise<void> {
@@ -72,6 +67,4 @@ export class OrderPage extends BasePage {
     await this.searchButton.click()
     return new OrderDetailsPage(this.page)
   }
-
-
 }

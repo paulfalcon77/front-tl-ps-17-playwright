@@ -42,11 +42,7 @@ test('Logout test', async ({ page }) => {
   await orderPage.checkFooterComponents()
   await orderPage.logoutButton.click()
   await loginPage.checkInnerComponents()
-
 })
-
-
-
 
 //npx playwright test -g "Login test"
 //npx playwright test -g "Create order"
