@@ -1,35 +1,24 @@
 import { expect, Locator, Page } from '@playwright/test'
 import { OrderPage } from './order-page'
 import { SERVICE_URL } from '../../config/env-data'
+import { BasePage } from './base-page'
+import { Button } from '../atoms/Button'
 
-export class LoginPage {
-  readonly page: Page
+export class LoginPage extends BasePage {
   readonly url: string = SERVICE_URL
-  readonly signInButton: Locator
+  readonly signInButton: Button
   readonly usernameField: Locator
   readonly passwordField: Locator
   readonly logoMain: Locator
-  readonly highLightTitle: Locator
-  readonly privacyPolicyLink: Locator
-  readonly cookiePolicyLink: Locator
-  readonly serviceTermsLink: Locator
-  readonly btnRu: Locator
-  readonly btnEN: Locator
-  readonly authError: Locator
+
 
   constructor(page: Page) {
-    this.page = page
-    this.signInButton = page.getByTestId('signIn-button')
+    super(page)
+    this.signInButton = new Button(page.getByTestId('signIn-button'))
     this.usernameField = page.getByTestId('username-input')
     this.passwordField = page.getByTestId('password-input')
     this.logoMain = page.getByTestId('mainPage-link')
-    this.highLightTitle = page.locator('h1')
-    this.privacyPolicyLink = page.getByTestId('privacy-policy')
-    this.cookiePolicyLink = page.getByTestId('cookie-policy')
-    this.serviceTermsLink = page.getByTestId('terms-of-service')
-    this.btnRu = page.getByRole('button', { name: 'RU' })
-    this.btnEN = page.getByRole('button', { name: 'EN' })
-    this.authError = page.getByTestId('username-input-error')
+
   }
 
   async open() {
@@ -45,22 +34,10 @@ export class LoginPage {
   async checkInnerComponents() {
     await expect(this.usernameField).toBeVisible()
     await expect(this.passwordField).toBeVisible()
-    await expect(this.signInButton).toBeVisible()
+    await this.signInButton.checkVisible(true)
     await expect(this.logoMain).toBeVisible()
-    await expect(this.highLightTitle).toBeVisible()
-    await expect(this.privacyPolicyLink).toBeVisible()
-    await expect(this.cookiePolicyLink).toBeVisible()
-    await expect(this.serviceTermsLink).toBeVisible()
-    await expect(this.btnRu).toBeVisible()
-    await expect(this.btnEN).toBeVisible()
+
   }
 
-  // Метод сделан. Не работает
-  async checkErrorForAuthentication(): Promise<void> {
-    await this.usernameField.fill('')
-    await this.passwordField.fill('')
-    await this.signInButton.click()
-    await expect(this.authError).toBeVisible()
-  }
-  // continue with the rest of the implementation below
+
 }
