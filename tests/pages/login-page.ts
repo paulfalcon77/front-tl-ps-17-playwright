@@ -1,21 +1,22 @@
-import { Locator, Page } from '@playwright/test'
+import { expect, Locator, Page } from '@playwright/test'
 import { OrderPage } from './order-page'
 import { SERVICE_URL } from '../../config/env-data'
+import { BasePage } from './base-page'
+import { Button } from '../atoms/Button'
 
-export class LoginPage {
-  readonly page: Page
+export class LoginPage extends BasePage {
   readonly url: string = SERVICE_URL
-  readonly signInButton: Locator
+  readonly signInButton: Button
   readonly usernameField: Locator
   readonly passwordField: Locator
-  // add more locators here
+  readonly logoMain: Locator
 
   constructor(page: Page) {
-    this.page = page
-    this.signInButton = page.getByTestId('signIn-button')
+    super(page)
+    this.signInButton = new Button(page.getByTestId('signIn-button'))
     this.usernameField = page.getByTestId('username-input')
     this.passwordField = page.getByTestId('password-input')
-    // continue with the rest of the implementation below
+    this.logoMain = page.getByTestId('mainPage-link')
   }
 
   async open() {
@@ -28,6 +29,10 @@ export class LoginPage {
     await this.signInButton.click()
     return new OrderPage(this.page)
   }
-
-  // continue with the rest of the implementation below
+  async checkInnerComponents() {
+    await expect(this.usernameField).toBeVisible()
+    await expect(this.passwordField).toBeVisible()
+    await this.signInButton.checkVisible(true)
+    await expect(this.logoMain).toBeVisible()
+  }
 }
