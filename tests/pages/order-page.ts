@@ -69,6 +69,6 @@ export class OrderPage extends BasePage {
   }
 
   async checkSuccessfullyCreatedPopup(visible = true): Promise<void> {
-    await expect(this.confirmationPopup).toBeVisible({visible});
+    await expect(this.confirmationPopup).toBeVisible({ visible })
   }
 }

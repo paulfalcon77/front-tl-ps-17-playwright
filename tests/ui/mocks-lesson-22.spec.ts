@@ -2,7 +2,7 @@ import { test } from '@playwright/test'
 import { LoginPage } from '../pages/login-page'
 import { PASSWORD, USERNAME } from '../../config/env-data'
 import { ENDPOINTS } from '../../utils/endpoints'
-import { TEST_DATA} from '../../utils/TestData'
+import { TEST_DATA } from '../../utils/TestData'
 import { fakeJwt } from '../../utils/jwt'
 
 //const orderId = 17391
@@ -26,7 +26,7 @@ test.describe('Mocked order flows', () => {
       })
     })
     await orderPage.createOrder()
-    await orderPage.checkSuccessfullyCreatedPopup();
+    await orderPage.checkSuccessfullyCreatedPopup()
   })
 
   test(' Mocked order search - found', async ({ page }) => {
@@ -58,11 +58,11 @@ test.describe('Mocked order flows', () => {
 
     await page.route(`**${ENDPOINTS.ORDERS}/*`, async (route) => {
       await route.fulfill({
-        status: 200
+        status: 200,
       })
     })
     const notFoundPage = await orderPage.checkOrderNotFound()
-    await notFoundPage.checkVisible(true);
+    await notFoundPage.checkVisible(true)
   })
 
   test(' Mocked server error', async ({ page }) => {
@@ -83,7 +83,6 @@ test.describe('Mocked order flows', () => {
     const notFoundPage = await orderPage.checkOrderNotFound()
     await notFoundPage.checkVisible(true)
   })
-
 })
 
 // await page.unrouteAll() - снимает регистрацию со всех ендпоинтов (роутов). Одной командой снимае все моки.

@@ -7,7 +7,7 @@ export function fakeJwt() {
     exp: Math.floor(Date.now() / 1000) + 60 * 60 * 4,
     iat: Math.floor(Date.now() / 1000),
   }
-  return jwt.sign(payload, secret,{
+  return jwt.sign(payload, secret, {
     algorithm: 'HS512',
   })
 }
