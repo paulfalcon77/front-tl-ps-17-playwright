@@ -18,14 +18,12 @@ test.describe('Mocked order flows', () => {
   })
 
   test('Should show order not found page for missing ID', async ({ Orders }) => {
-     await Orders.checkOrderNotFound()
+    await Orders.checkOrderNotFound()
 
     // await Orders.statusButton.click()
     // await Orders.searchInput.fill('999999999999')
     // await Orders.searchButton.click()
-
   })
-
 })
 
 // npx playwright test -g 'Should create and view order details' --project=chromium --debug

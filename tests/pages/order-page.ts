@@ -73,7 +73,6 @@ export class OrderPage extends BasePage {
     await expect(this.confirmationPopup).toBeVisible({ visible })
   }
 
-
   // async closeConfirmationPopup(): Promise<void> {
   //   await this.confirmPopupOkButton.click()
   //   await expect(this.confirmationPopup).toBeHidden()
