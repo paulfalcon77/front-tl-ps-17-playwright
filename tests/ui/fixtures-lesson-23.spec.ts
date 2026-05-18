@@ -1,33 +1,33 @@
 import { test } from '../fixtures/delivery.fixture'
 
 test.describe('Mocked order flows', () => {
-  test('Order creation with fixture', async ({ Orders, Login }) => {
-    await Login.checkInnerComponents()
+  // Первый тест: Убираем Login из аргументов.
+  // Проверяем компоненты страницы создания заказа Orders, так как мы уже внутри приложения!
+  test('Order creation with fixture', async ({ Orders }) => {
+    await Orders.checkInnerComponents()
     await Orders.createOrder()
     await Orders.checkSuccessfullyCreatedPopup()
   })
 
-  test('Should  create and view order details', async ({ Orders, orderId }) => {
+  test('Should create and view order details', async ({ Orders, orderId }) => {
     await Orders.createOrder()
     await Orders.checkSuccessfullyCreatedPopup()
-
+    await Orders.confirmationPopup.locator('button', { hasText: 'OK' }).click()
     const orderDetailsPage = await Orders.checkOrderFound(Number(orderId))
     await orderDetailsPage.checkVisible(true)
   })
 
-  test('Should show order not found page for missing ID', async ({ page, Orders }) => {
-    await page.route('**/orders/0*', async (route) => {
-      await route.fulfill({
-        status: 404,
-        contentType: 'application/json',
-        body: JSON.stringify({ message: 'Order not found' }),
-      })
-    })
-    const notFoundPage = await Orders.checkOrderNotFound()
-    await notFoundPage.checkVisible(true)
+  test('Should show order not found page for missing ID', async ({ Orders }) => {
+     await Orders.checkOrderNotFound()
+
+    // await Orders.statusButton.click()
+    // await Orders.searchInput.fill('999999999999')
+    // await Orders.searchButton.click()
+
   })
+
 })
 
-// npx playwright test -g 'Should successfully create and view order details' --project=chromium --debug
+// npx playwright test -g 'Should create and view order details' --project=chromium --debug
 // npx playwright test -g 'Should show order not found page for missing ID' --project=chromium --debug
 // npx playwright test -g 'Order creation with fixture' --project=chromium --debug

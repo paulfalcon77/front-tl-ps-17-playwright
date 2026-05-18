@@ -57,7 +57,7 @@ export class OrderPage extends BasePage {
 
   async checkOrderNotFound(): Promise<NotFoundPage> {
     await this.statusButton.click()
-    await this.searchInput.fill('0')
+    await this.searchInput.fill('')
     await this.searchButton.click()
     return new NotFoundPage(this.page)
   }
@@ -72,6 +72,7 @@ export class OrderPage extends BasePage {
   async checkSuccessfullyCreatedPopup(visible = true): Promise<void> {
     await expect(this.confirmationPopup).toBeVisible({ visible })
   }
+
 
   // async closeConfirmationPopup(): Promise<void> {
   //   await this.confirmPopupOkButton.click()
