@@ -17,8 +17,9 @@ test.describe('Mocked order flows', () => {
     await orderDetailsPage.checkVisible(true)
   })
 
-  test('Should show order not found page for missing ID', async ({ Orders }) => {
+  test('Should show order not found page for missing ID', async ({ Orders, OrderNotFound }) => {
     await Orders.checkOrderNotFound()
+    await OrderNotFound.checkVisible(true)
 
     // await Orders.statusButton.click()
     // await Orders.searchInput.fill('999999999999')

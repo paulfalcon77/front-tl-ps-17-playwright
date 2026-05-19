@@ -60,7 +60,13 @@ export const test = base.extend<Fixtures>({
     const mainPage = await context.newPage()
 
     await mainPage.route(`${BE_URL}${ENDPOINTS.ORDERS}/*`, async (route) => {
-      if (route.request().method() !== 'GET') {
+      if (route.request().url().endsWith('/404')) {
+        await route.fulfill({
+          status: 404,
+          contentType: 'application/json',
+          body: JSON.stringify({ error: 'Order not found' }),
+        })
+      } else if (route.request().method() !== 'GET') {
         await route.continue()
       } else {
         await route.fulfill({

@@ -55,11 +55,10 @@ export class OrderPage extends BasePage {
     await expect(this.confirmationPopup).toBeVisible()
   }
 
-  async checkOrderNotFound(): Promise<NotFoundPage> {
+  async checkOrderNotFound(): Promise<void> {
     await this.statusButton.click()
-    await this.searchInput.fill('')
+    await this.searchInput.fill('404')
     await this.searchButton.click()
-    return new NotFoundPage(this.page)
   }
 
   async checkOrderFound(id: number): Promise<OrderDetailsPage> {

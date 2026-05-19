@@ -19,7 +19,7 @@ test.describe('Mocked order flows', () => {
       console.log(token)
       localStorage.setItem(
         'jwt',
-        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXZlbHNva29sb3YiLCJleHAiOjE3Nzg3OTUwNTQsImlhdCI6MTc3ODc3NzA1NH0.Dec6kkxQT6iO1pJJgk95RxeKpkJRjmPHNypRihnuLjyVD9plTCkud4_GP8dscdZTx98sSLazzV5tGf1m3tf0Gw',
+        token, //'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXZlbHNva29sb3YiLCJleHAiOjE3Nzg3OTUwNTQsImlhdCI6MTc3ODc3NzA1NH0.Dec6kkxQT6iO1pJJgk95RxeKpkJRjmPHNypRihnuLjyVD9plTCkud4_GP8dscdZTx98sSLazzV5tGf1m3tf0Gw',
       )
     }, jwt)
 
