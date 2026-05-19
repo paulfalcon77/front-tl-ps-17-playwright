@@ -18,13 +18,13 @@ jobs:
 
       - name: Run ESLint check
         run: |
-            echo "Running ESLint to check for linting issues..."
-            npm run lint   
+          echo "Running ESLint to check for linting issues..."
+          npm run lint
 
       - name: Run Prettier check
         run: |
-            echo "Running Prettier to check for formatting issues..."
-            npm run check
+          echo "Running Prettier to check for formatting issues..."
+          npm run check
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -34,6 +34,7 @@ jobs:
           URL: ${{ secrets.URL }}
           TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+          BE_URL: ${{ secrets.BE_URL }}
         run: npx playwright test
 
       - uses: actions/upload-artifact@v4
